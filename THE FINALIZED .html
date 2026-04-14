@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SA Sneakers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial;margin:0;background:#f5f5f5}
+header{background:black;color:white;padding:15px;text-align:center}
+.container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:20px}
+.card{background:white;padding:15px;border-radius:10px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+img{width:100%;height:200px;object-fit:cover;border-radius:10px}
+.price{color:green;font-size:18px}
+button{background:black;color:white;padding:10px;border:none;border-radius:5px;cursor:pointer}
+select{padding:5px;margin:5px}
+#cart{position:fixed;top:10px;right:10px;background:white;padding:10px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.2)}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>SA Sneakers 🇿🇦</h1>
+<p>Premium Streetwear & Sneakers</p>
+</header>
+
+<div id="cart">
+🛒 Items: <span id="count">0</span><br>
+💰 Total: R<span id="total">0</span><br>
+<button onclick="checkout()">Checkout</button>
+</div>
+
+<div class="container"></div>
+
+<script>
+const products = [
+{name:"Air Force 1",price:1500,img:"https://www.0000art.com/cdn/shop/products/image_3f6ae6bd-3657-4810-b6e1-9dd539d382ec_590x.webp?v=1660143037"},
+{name:"Timberland Boots",price:2500,img:"https://www.0000art.com/cdn/shop/products/image_73358b42-cefc-4af7-9727-735fcc2191e9_590x.jpg?v=1663691972"},
+{name:"Air Jordan 1",price:1750,img:"https://www.0000art.com/cdn/shop/products/image_fdd4d5f6-cfe8-4493-94d4-dd191680cf1b_590x.webp?v=1671500166"},
+{name:"Air Jordan 4 Frozen",price:2000,img:"https://www.0000art.com/cdn/shop/files/ED67A937-C684-4DCB-BC6B-44A89F3A7662_370x.jpg?v=1734521866"},
+{name:"Air Jordan 4 Black Cat",price:2300,img:"https://www.0000art.com/cdn/shop/products/image_27b66117-e3f6-426b-8bd5-b6c6210f59b7_590x.jpg?v=1660160312"},
+{name:"Puma Suede XL",price:2000,img:"https://www.0000art.com/cdn/shop/files/313F98F6-5B13-4CE6-986F-00F0BC057854_300x300.jpg?v=1726987068"},
+{name:"Adidas Campus 00",price:2000,img:"https://www.0000art.com/cdn/shop/files/4FC18C16-E554-4E5E-95EE-9576A9361C1F_590x.jpg?v=1714556361"},
+{name:"Air Jordan 4 Retro Purple",price:2000,img:"https://www.0000art.com/cdn/shop/products/image_c3e7b776-7eee-42d6-b7bf-2c3c55e0375f_590x.jpg?v=1661886215"},
+{name:"Air Jordan 4 Military Black",price:2000,img:"https://www.0000art.com/cdn/shop/products/image_1ae42bb8-7bf2-4d3b-8d43-03304e8de393_300x300.webp?v=1671499906"},
+{name:"Air Jordan 4 Retro Metallica Red",price:2000,img:"https://www.0000art.com/cdn/shop/products/image_d76b79f8-a38d-44aa-a3b8-c50788f63c82_590x.jpg?v=1664219407"},
+{name:"Vans Knu Skool",price:1800,img:"https://www.0000art.com/cdn/shop/files/2D242FEE-E23A-465D-BA61-C7327CD242E5_590x.jpg?v=1718812133"},
+{name:"Jordan 1 Low Concord SE",price:2700,img:"https://cdn-images.farfetch-contents.com/19/76/51/42/19765142_44208140_1000.jpg"},
+{name:"Jordan 4 Retro SB Pine Green",price:2000,img:"https://www.0000art.com/cdn/shop/files/image_93d3f113-048d-4ec9-a50f-a48406076639_590x.jpg?v=1691433608"},
+{name:"Bape Sta Black",price:2500,img:"https://www.0000art.com/cdn/shop/files/DC31588B-951F-4795-A134-8ADE6C7A39C3_590x.jpg?v=1697049849"},
+{name:"Bape Sta Sax 2022",price:2500,img:"https://www.0000art.com/cdn/shop/files/E7018871-34C6-432E-93CC-9E2301549F2A_590x.jpg?v=1697087260"}
+];
+
+let count = 0;
+let total = 0;
+let cart = [];
+
+function addToCart(name, price){
+    count++;
+    total += price;
+    cart.push(name + " - R" + price);
+
+    document.getElementById('count').innerText = count;
+    document.getElementById('total').innerText = total;
+}
+
+function checkout(){
+    let message = "Order:%0A" + cart.join("%0A") + "%0ATotal: R" + total;
+    window.open("https://wa.me/27607081522?text=" + message);
+}
+
+window.onload = function(){
+    let container = document.querySelector('.container');
+
+    products.forEach(p => {
+        container.innerHTML += `
+        <div class="card">
+            <img src="${p.img}" alt="${p.name}">
+            <h3>${p.name}</h3>
+            <p class="price">R${p.price}</p>
+
+            <select>
+                <option>Size 3</option>
+                <option>Size 4</option>
+                <option>Size 5</option>
+                <option>Size 6</option>
+                <option>Size 7</option>
+                <option>Size 8</option>
+                <option>Size 9</option>
+                <option>Size 10</option>
+                <option>Size 11</option>
+            </select>
+
+            <button onclick="addToCart('${p.name}', ${p.price})">
+                Add to Cart
+            </button>
+        </div>`;
+    });
+};
+</script>
+
+</body>
+</html>
